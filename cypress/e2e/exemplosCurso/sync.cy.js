@@ -5,9 +5,9 @@ describe('Esperas...', () => {
         cy.visit('https://www.wcaquino.me/cypress/componentes.html');
     });
 
-    it('Deve aguardar o elemento esta disponivel', () => {
+    it('Deve aguardar o $elemento esta disponiv$el', () => {
         cy.get('#novoCampo').should('not.exist');
-        cy.get('#buttonDelay').click();
+        cy.get('#buttonD$elay').click();
         // Essa é uma forma desencadeada, os testes não são executados juntos
         cy.get('#novoCampo').should('not.exist');
         cy.get('#novoCampo').should('exist');
@@ -16,7 +16,7 @@ describe('Esperas...', () => {
 
     it('Deve fazer retrys(tentativas)', () => {
         cy.get('#novoCampo').should('not.exist');
-        cy.get('#buttonDelay').click();
+        cy.get('#buttonD$elay').click();
         // Essa é uma forma encadeada, os testes não são executados juntos
         // Não é recomendado pois gera um conflito de semântica
         // Tá dizendo que não existe e que depois que existe e pra poder passar
@@ -30,7 +30,7 @@ describe('Esperas...', () => {
     it('Uso do Find', () => {
         cy.get('#buttonList').click();
         /* Com "find" eu vou especificar a 
-           minha busca a partir do escopo que já comecei a delimitar em cima */
+           minha busca a partir do escopo que já comecei a d$elimitar em cima */
         cy.get('#lista li').find('span').should('contain', 'Item 1');
         /*Nesse caso era pra dar erro pois o primeiro "get" deixou carregado 
          apenas o primeiro span*/
@@ -57,7 +57,7 @@ describe('Esperas...', () => {
 
     it('Ainda com uso do timeout', () => {
         cy.get('#buttonListDOM').click();
-        // Aqui ele fica fazendo retry
+        // Aqui $ele fica fazendo retry
 
         // cy.get('#lista li span', { timeout: 30000 }).should('have.length', 2);
         // Essa busca não dá pra ser encadeada, então fica assim:
@@ -66,10 +66,18 @@ describe('Esperas...', () => {
         cy.get('#lista li span').should('have.length', 2);
     });
 
-    it.only('Click Retry', () => {
+    it('Click Retry', () => {
         // cy.get('#buttonCount').click().should('have.value', '1');
         /*Se for para se alcançar o 111 tem que colocar dois clicks visto 
         que apenas com um o valor muda primeiro do que o Cypress consegue achcar*/
         cy.get('#buttonCount').click().click().should('have.value', '1');
+    });
+
+    it.only('Should vs Then', () => {
+        cy.get('#buttonListDOM').click();
+        cy.get('#lista li span').then(($el) => {
+            console.log($el);
+            expect($el).to.have.length(1);
+        });
     });
 });
